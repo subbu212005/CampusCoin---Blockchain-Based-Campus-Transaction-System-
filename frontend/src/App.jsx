@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
 import { BrowserProvider, Contract, JsonRpcProvider, parseUnits } from 'ethers';
 import { CAMPUS_COIN_ADDRESS, CAMPUS_COIN_ABI } from './utils/contracts';
-import { CreditCard, Wallet, Users, Coffee, LogOut, PlugZap, CircleDollarSign } from 'lucide-react';
+import { CreditCard, Wallet, Users, Coffee, LogOut, PlugZap, CircleDollarSign, ShieldAlert } from 'lucide-react';
 import ParentDashboard from './components/ParentDashboard';
 import StudentDashboard from './components/StudentDashboard';
 import StudentWallet from './components/StudentWallet';
 import CanteenDashboard from './components/CanteenDashboard';
+import AdminPanel from './components/AdminPanel';
 
 // Hardhat local node default accounts
 const ACCOUNTS = {
@@ -116,6 +117,7 @@ function App() {
       case 'PARENT': return <ParentDashboard accounts={ACCOUNTS} wallet={wallet} />;
       case 'CANTEEN': return <CanteenDashboard accounts={ACCOUNTS} wallet={wallet} />;
       case 'CARD': return <StudentWallet accounts={ACCOUNTS} wallet={wallet} />;
+      case 'ADMIN': return <AdminPanel accounts={ACCOUNTS} wallet={wallet} />;
       default: return (
         <div className="flex flex-col items-center justify-center h-[60vh] space-y-6">
           <div className="text-center space-y-2">
@@ -124,11 +126,12 @@ function App() {
             {walletStatus && <p className="text-sm text-red-600">{walletStatus}</p>}
           </div>
           
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-5xl w-full">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 max-w-6xl w-full">
             <RoleCard icon={<Wallet className="w-8 h-8"/>} title="Student" role="STUDENT" onClick={() => setActiveRole('STUDENT')} color="bg-emerald-50 hover:bg-emerald-100 text-emerald-700" />
             <RoleCard icon={<Users className="w-8 h-8"/>} title="Parent" role="PARENT" onClick={() => setActiveRole('PARENT')} color="bg-blue-50 hover:bg-blue-100 text-blue-700" />
             <RoleCard icon={<Coffee className="w-8 h-8"/>} title="Canteen Staff" role="CANTEEN" onClick={() => setActiveRole('CANTEEN')} color="bg-amber-50 hover:bg-amber-100 text-amber-700" />
             <RoleCard icon={<CreditCard className="w-8 h-8"/>} title="Student Card" role="CARD" onClick={() => setActiveRole('CARD')} color="bg-slate-50 hover:bg-slate-100 text-slate-700" />
+            <RoleCard icon={<ShieldAlert className="w-8 h-8"/>} title="Finance Admin" role="ADMIN" onClick={() => setActiveRole('ADMIN')} color="bg-indigo-50 hover:bg-indigo-100 text-indigo-700" />
           </div>
         </div>
       );
